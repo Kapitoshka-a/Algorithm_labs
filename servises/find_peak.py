@@ -1,8 +1,10 @@
 # variant 3 , level 3
+
 def find_left_peak_part(array, peaks):
     left_part = []
     start = sum([len(i) for i in peaks]) - 1 if peaks else 0
-    for i in range(start, len(array)):
+    for i in range(start, len(array) - 1):
+
         if array[i] < array[i + 1]:
             left_part.append(array[i])
         else:
@@ -46,4 +48,4 @@ def find_longest_peak(array):
 
 
 if __name__ == '__main__':
-    print(find_longest_peak([1, 2, 3, 4, 2, 5, 6, 7, 0, -11,]))
+    print(find_longest_peak([1, 2, 3, 4, 2, 5, 6, 7, 0, -11]))
