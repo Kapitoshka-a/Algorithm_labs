@@ -35,12 +35,24 @@ def binary_tree_diameter(current_node):
 
 
 def max_binary_tree_diameter(root_node):
-    if root_node:
-        left_root_tree_len = binary_tree_diameter(root_node.left)
-        right_root_tree_len = binary_tree_diameter(root_node.right)
+    if not root_node:
+        return 0
 
-        left_tree_diameter = max_binary_tree_diameter(root_node.left)
-        right_tree_diameter = max_binary_tree_diameter(root_node.right)
+    stack = [(root_node, 0)]
+    max_diameter = 0
 
-        return max(1 + left_root_tree_len + right_root_tree_len, max(left_tree_diameter, right_tree_diameter))
-    return 0
+    while stack:
+        current_node, current_diameter = stack.pop()
+
+        left_root_tree_len = binary_tree_diameter(current_node.left)
+        right_root_tree_len = binary_tree_diameter(current_node.right)
+
+        max_diameter = max(max_diameter, 1 + left_root_tree_len + right_root_tree_len)
+
+        if current_node.left:
+            stack.append((current_node.left, current_diameter + 1))
+
+        if current_node.right:
+            stack.append((current_node.right, current_diameter + 1))
+
+    return max_diameter
