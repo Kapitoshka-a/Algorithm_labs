@@ -1,5 +1,5 @@
 import unittest
-from servises.angry_cows import *
+from src.angry_cows import *
 
 
 class TestMaxMinDistance(unittest.TestCase):

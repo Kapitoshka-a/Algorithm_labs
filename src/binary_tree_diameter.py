@@ -28,31 +28,20 @@ class BinaryTree:
                 self._insert_recursively(current_node.right, element)
 
 
-def binary_tree_diameter(current_node):
-    if current_node:
-        return 1 + max(binary_tree_diameter(current_node.left), binary_tree_diameter(current_node.right))
-    return 0
-
-
 def max_binary_tree_diameter(root_node):
-    if not root_node:
-        return 0
-
-    stack = [root_node]
     max_diameter = 0
 
-    while stack:
-        current_node = stack.pop()
+    def binary_tree_diameter(node):
+        nonlocal max_diameter
+        if not node:
+            return 0
 
-        left_root_tree_len = binary_tree_diameter(current_node.left)
-        right_root_tree_len = binary_tree_diameter(current_node.right)
+        left_len = binary_tree_diameter(node.left)
+        right_len = binary_tree_diameter(node.right)
 
-        max_diameter = max(max_diameter, 1 + left_root_tree_len + right_root_tree_len)
+        max_diameter = max(max_diameter, left_len + right_len)
 
-        if current_node.left:
-            stack.append(current_node.left)
+        return 1 + max(left_len, right_len)
 
-        if current_node.right:
-            stack.append(current_node.right)
-
+    binary_tree_diameter(root_node)
     return max_diameter
