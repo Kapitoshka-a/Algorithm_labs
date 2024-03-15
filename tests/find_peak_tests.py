@@ -1,5 +1,5 @@
 import unittest
-from servises.find_peak import *
+from src.find_peak import *
 
 
 class TestLongestPeak(unittest.TestCase):
