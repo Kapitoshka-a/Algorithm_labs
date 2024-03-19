@@ -29,6 +29,19 @@ class TestAVLPriorityQueue(unittest.TestCase):
         expected_output = ['B', 'C', 'A', 'D']
         self.assertEqual(pq.display(), expected_output)
 
+    def test_delete(self):
+        pq = AVL_Priority_Queue()
+        pq.insert(10, 'A')
+        pq.insert(20, 'B')
+        pq.insert(5, 'C')
+        pq.insert(15, 'D')
+        pq.insert(25, 'E')
+        pq.insert(30, 'F')
+        pq.delete()
+
+        expected_output = ['E', 'B', 'D', 'A', 'C']
+        self.assertEqual(pq.display(), expected_output)
+
 
 if __name__ == "__main__":
     unittest.main()

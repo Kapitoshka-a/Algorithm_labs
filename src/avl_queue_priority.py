@@ -79,6 +79,30 @@ class AVL_Priority_Queue:
     def insert(self, priority, value):
         self.root = self._insert(self.root, value, priority)
 
+    def max_priority_node(self, root):
+        if root is None or root.left is None:
+            return root
+
+        return self.max_priority_node(root.left)
+
+    def _delete(self, root):
+        if not root:
+            return root
+
+        if root.left:
+            root.left = self._delete(root.left)
+        else:
+            temp = root.right
+            root = None
+            return temp
+
+        return self.balance(root)
+
+    def delete(self):
+        max_priority_node = self.max_priority_node(self.root)
+        self._delete(self.root)
+        return max_priority_node
+
     def inorder(self, root, result):
         if root:
             self.inorder(root.left, result)
