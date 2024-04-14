@@ -1,14 +1,14 @@
 import unittest
-from src.avl_queue_priority import AVL_Priority_Queue
+from src.avl_queue_priority import AVLPriorityQueue
 
 
 class TestAVLPriorityQueue(unittest.TestCase):
     def test_empty_queue(self):
-        pq = AVL_Priority_Queue()
+        pq = AVLPriorityQueue()
         self.assertEqual(pq.display(), None)
 
     def test_insert_and_display(self):
-        pq = AVL_Priority_Queue()
+        pq = AVLPriorityQueue()
         pq.insert(10, 'A')
         pq.insert(20, 'B')
         pq.insert(5, 'C')
@@ -20,7 +20,7 @@ class TestAVLPriorityQueue(unittest.TestCase):
         self.assertEqual(pq.display(), expected_output)
 
     def test_same_priority(self):
-        pq = AVL_Priority_Queue()
+        pq = AVLPriorityQueue()
         pq.insert(10, 'A')
         pq.insert(20, 'B')
         pq.insert(20, 'C')
@@ -30,7 +30,7 @@ class TestAVLPriorityQueue(unittest.TestCase):
         self.assertEqual(pq.display(), expected_output)
 
     def test_delete(self):
-        pq = AVL_Priority_Queue()
+        pq = AVLPriorityQueue()
         pq.insert(10, 'A')
         pq.insert(20, 'B')
         pq.insert(5, 'C')

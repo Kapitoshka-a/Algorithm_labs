@@ -7,7 +7,7 @@ class Node:
         self.height = 1
 
 
-class AVL_Priority_Queue:
+class AVLPriorityQueue:
     def __init__(self):
         self.root = None
 
