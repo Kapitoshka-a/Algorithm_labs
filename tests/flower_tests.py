@@ -25,7 +25,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(max_flow, 5)
 
     def test_build_graph_from_csv(self):
-        graph = Graph(10)  # Update the size based on the number of vertices in the CSV
+        graph = Graph(10)
         graph.build_graph_from_csv("test_roads.csv")
         expected_adj_matrix = [
              [0, 10, 5, 0, 0, 0, 0, 0, 0, 0],
