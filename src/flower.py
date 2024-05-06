@@ -10,11 +10,9 @@ class Graph:
     def __init__(self, csv_file: str):
         self.list_of_vertices = []
         self.csv_file = csv_file
-        unique_vertices = self.unique_vertices(csv_file)
-        self.edges_matrix = [[0] * unique_vertices for _ in range(unique_vertices)]
+        self.edges_matrix = []
 
-    @staticmethod
-    def unique_vertices(csv_file: str) -> int:
+    def unique_vertices(self, csv_file: str) -> int:
         unique_vertices = set()
         with open(csv_file, "r") as file:
             for line in file:
@@ -84,8 +82,9 @@ class Graph:
         return self.ford_fulkerson(DEFAULT_START_VIRTUAL_VERTEX, DEFAULT_END_VIRTUAL_VERTEX)
 
     def build_graph_from_csv(self):
+        unique_vertices = self.unique_vertices(self.csv_file)
+        self.edges_matrix = [[0] * unique_vertices for _ in range(unique_vertices)]
         with open(self.csv_file, 'r') as file:
             for line in file:
                 data = line.strip().split(',')
                 self.add_edge(data[0], data[1], int(data[2]))
-
