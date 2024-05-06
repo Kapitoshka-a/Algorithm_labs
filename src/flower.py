@@ -1,14 +1,28 @@
-from typing import List, Set, Tuple
+import csv
+from typing import List, Set
 
-DEFAULT_MATRIX_SIZE = 10
 DEFAULT_START_VIRTUAL_VERTEX = "START_VIRTUAL_VERTEX"
 DEFAULT_END_VIRTUAL_VERTEX = "END_VIRTUAL_VERTEX"
+VIRTUAL_VERTEX_NUM = 2
 
 
 class Graph:
-    def __init__(self, vertices: int = DEFAULT_MATRIX_SIZE):
+    def __init__(self, csv_file: str):
         self.list_of_vertices = []
-        self.edges_matrix = [[0] * vertices for _ in range(vertices)]
+        self.csv_file = csv_file
+        unique_vertices = self.unique_vertices(csv_file)
+        self.edges_matrix = [[0] * unique_vertices for _ in range(unique_vertices)]
+
+    @staticmethod
+    def unique_vertices(csv_file: str) -> int:
+        unique_vertices = set()
+        with open(csv_file, "r") as file:
+            for line in file:
+                if line[0] not in unique_vertices:
+                    unique_vertices.add(line[0])
+                if line[1] not in unique_vertices:
+                    unique_vertices.add(line[1])
+        return len(unique_vertices) + VIRTUAL_VERTEX_NUM
 
     def add_edge(self, current_vertex: str, next_vertex: str, weight: float):
         if current_vertex not in self.list_of_vertices:
@@ -69,9 +83,9 @@ class Graph:
         self.add_virtual_vertexes(sources, sinks)
         return self.ford_fulkerson(DEFAULT_START_VIRTUAL_VERTEX, DEFAULT_END_VIRTUAL_VERTEX)
 
-    def build_graph_from_csv(self, filename):
-        with open(filename, 'r') as file:
+    def build_graph_from_csv(self):
+        with open(self.csv_file, 'r') as file:
             for line in file:
                 data = line.strip().split(',')
                 self.add_edge(data[0], data[1], int(data[2]))
-        return self.edges_matrix
+

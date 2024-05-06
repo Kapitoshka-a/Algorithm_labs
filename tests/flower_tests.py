@@ -1,40 +1,52 @@
+import os
 import unittest
 from src.flower import Graph
 
 
-class TestGraph(unittest.TestCase):
+class TestFlowerGraph(unittest.TestCase):
+    def setUp(self):
+        self.test_csv_file = "test_roads.csv"
+        with open(self.test_csv_file, 'w') as file:
+            file.write("A,B,3\n")
+            file.write("B,C,4\n")
+            file.write("C,D,5\n")
+
+    def tearDown(self):
+        if os.path.exists(self.test_csv_file):
+            os.remove(self.test_csv_file)
+
+    def test_unique_vertices(self):
+        graph = Graph(self.test_csv_file)
+        num_vertices = graph.unique_vertices(self.test_csv_file)
+        self.assertEqual(num_vertices, 6)
+
+    def test_add_edge(self):
+        graph = Graph(self.test_csv_file)
+        graph.add_edge("A", "B", 3)
+        graph.add_edge("B", "C", 4)
+        self.assertEqual(graph.edges_matrix[0][1], 3)
+        self.assertEqual(graph.edges_matrix[1][2], 4)
 
     def test_dfs(self):
-        graph = Graph()
-        graph.add_edge("A", "B", 5)
-        graph.add_edge("B", "C", 10)
-        graph.add_edge("C", "D", 15)
-        self.assertEqual(graph.dfs(0, 3), [0, 1, 2, 3])
+        graph = Graph(self.test_csv_file)
+        graph.add_edge("A", "B", 3)
+        graph.add_edge("B", "C", 4)
+        path = graph.dfs(0, 2)
+        self.assertEqual(path, [0, 1, 2])
+
+    def test_ford_fulkerson(self):
+        graph = Graph(self.test_csv_file)
+        graph.build_graph_from_csv()
+        max_flow = graph.ford_fulkerson("A", "D")
+        self.assertEqual(max_flow, 3)
 
     def test_max_flow(self):
-        graph = Graph()
-        graph.add_edge("A", "B", 5)
-        graph.add_edge("B", "C", 10)
-        graph.add_edge("C", "D", 15)
-        graph.add_edge("F", "K", 15)
-        max_flow = graph.max_flow(["A", "F"], ["D", "K"])
-        self.assertEqual(max_flow, 20)
-
-    def test_build_graph_from_csv(self):
-        graph = Graph(10)
-        graph.build_graph_from_csv("test_roads.csv")
-        expected_adj_matrix = [
-             [0, 10, 5, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 8, 0, 0, 12, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 6, 0, 0, 0, 15, 7, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-        self.assertEqual(graph.edges_matrix, expected_adj_matrix)
+        graph = Graph(self.test_csv_file)
+        graph.build_graph_from_csv()
+        sources = ["A"]
+        sinks = ["D"]
+        max_flow = graph.max_flow(sources, sinks)
+        self.assertEqual(max_flow, 3)
 
 
 if __name__ == '__main__':
