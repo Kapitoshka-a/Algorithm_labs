@@ -1,4 +1,3 @@
-import csv
 from typing import List, Set
 
 DEFAULT_START_VIRTUAL_VERTEX = "START_VIRTUAL_VERTEX"

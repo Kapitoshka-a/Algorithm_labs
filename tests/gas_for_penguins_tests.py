@@ -9,7 +9,7 @@ class TestGasForPenguins(unittest.TestCase):
         my_gas_lines = [('g1', 'A'), ('g1', 'B'), ('A', 'D'), ('B', 'D'), ('g2', 'C'), ('C', 'B')]
 
         self.assertEqual(inaccessible_cities(my_cities, my_gas_stations, my_gas_lines),
-                         {'g1': ['C', 'E'], 'g2': ['E', 'A']})
+                         {'g1': {'C', 'E'}, 'g2': {'A', 'E'}})
 
     def test_case_2(self):
         my_cities = {'A', 'B'}
@@ -17,4 +17,4 @@ class TestGasForPenguins(unittest.TestCase):
         my_gas_lines = [('g1', 'A'), ('A', 'B')]
 
         self.assertEqual(inaccessible_cities(my_cities, my_gas_stations, my_gas_lines),
-                         {'g1': []})
+                         {'g1': set()})

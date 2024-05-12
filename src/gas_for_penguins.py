@@ -39,7 +39,7 @@ def inaccessible_cities(cities: Set, gas_stations: List, gas_lines: List):
     gas_ways = accessible_cities(gas_stations, gas_lines)
     broken_gas_ways = {}
     for gas_station in gas_ways.keys():
-        broken_gas_ways[gas_station] = [city for city in cities if city not in gas_ways[gas_station]]
+        broken_gas_ways[gas_station] = {city for city in cities if city not in gas_ways[gas_station]}
 
     return broken_gas_ways
 

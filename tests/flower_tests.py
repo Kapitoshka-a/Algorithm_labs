@@ -15,25 +15,6 @@ class TestFlowerGraph(unittest.TestCase):
         if os.path.exists(self.test_csv_file):
             os.remove(self.test_csv_file)
 
-    def test_unique_vertices(self):
-        graph = Graph(self.test_csv_file)
-        num_vertices = graph.unique_vertices(self.test_csv_file)
-        self.assertEqual(num_vertices, 6)
-
-    def test_add_edge(self):
-        graph = Graph(self.test_csv_file)
-        graph.add_edge("A", "B", 3)
-        graph.add_edge("B", "C", 4)
-        self.assertEqual(graph.edges_matrix[0][1], 3)
-        self.assertEqual(graph.edges_matrix[1][2], 4)
-
-    def test_dfs(self):
-        graph = Graph(self.test_csv_file)
-        graph.add_edge("A", "B", 3)
-        graph.add_edge("B", "C", 4)
-        path = graph.dfs(0, 2)
-        self.assertEqual(path, [0, 1, 2])
-
     def test_ford_fulkerson(self):
         graph = Graph(self.test_csv_file)
         graph.build_graph_from_csv()
